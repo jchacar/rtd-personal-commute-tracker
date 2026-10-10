@@ -1,3 +1,4 @@
+
 import csv
 from datetime import datetime
 from pathlib import Path
@@ -39,6 +40,12 @@ def get_active_services(target_date):
             if exception["exception_type"] == "1":
                 active.add(service_id)
 
+            elif exception["exception_type"] == "2":
+                active.discard(service_id)
+
+    return sorted(active)
+
+
 def get_route_trips(route_id, target_date):
     active_services = get_active_services(target_date)
     trips = load_csv("trips.txt")
@@ -53,9 +60,3 @@ def get_route_trips(route_id, target_date):
             matching_trips.append(trip)
 
     return matching_trips
-
-
-            elif exception["exception_type"] == "2":
-                active.discard(service_id)
-
-    return sorted(active)
