@@ -39,6 +39,22 @@ def get_active_services(target_date):
             if exception["exception_type"] == "1":
                 active.add(service_id)
 
+def get_route_trips(route_id, target_date):
+    active_services = get_active_services(target_date)
+    trips = load_csv("trips.txt")
+
+    matching_trips = []
+
+    for trip in trips:
+        if (
+            trip["route_id"] == route_id
+            and trip["service_id"] in active_services
+        ):
+            matching_trips.append(trip)
+
+    return matching_trips
+
+
             elif exception["exception_type"] == "2":
                 active.discard(service_id)
 
